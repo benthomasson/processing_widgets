@@ -3,43 +3,80 @@
 from math import pi
 
 
+class Check(object):
 
-def check(x, y, check_size=20, check_color="#00833C"):
-    pushMatrix()
-    stroke(check_color)
-    fill(255)
-    translate(x, y)
-    strokeWeight(check_size/10)
-    ellipse(0, 0, check_size, check_size)
-    strokeWeight(check_size/5)
-    translate(0, check_size/4)
-    rotate(pi/6)
-    line(-check_size/4, 0, 0, 0)
-    rotate(pi/2)
-    line(-check_size * 0.6, 0, 0, 0)
-    popMatrix()
+    def __init__(self, x, y, size=20, color="#00833C"):
+        self.x = x
+        self.y = y
+        self.size = size
+        self.color = color
 
-def x_mark(x, y, x_size=20, x_color="#FF5000"):
-    pushMatrix()
-    stroke(x_color)
-    fill(255)
-    translate(x, y)
-    strokeWeight(x_size/10)
-    ellipse(0, 0, x_size, x_size)
-    strokeWeight(x_size/5)
-    rotate(pi/4)
-    line(-x_size/2, 0, x_size/2, 0)
-    rotate(pi/2)
-    line(-x_size/2, 0, x_size/2, 0)
-    popMatrix()
+    def draw(self):
+        pushMatrix()
+        stroke(self.color)
+        fill(255)
+        translate(self.x, self.y)
+        strokeWeight(self.size/10)
+        ellipse(0, 0, self.size, self.size)
+        strokeWeight(self.size/5)
+        translate(0, self.size/4)
+        rotate(pi/6)
+        line(-self.size/4, 0, 0, 0)
+        rotate(pi/2)
+        line(-self.size * 0.6, 0, 0, 0)
+        popMatrix()
 
-def square(x, y, s_size, s_color="#5A5A5A", s_fill="#B9B9B9"):
-    pushMatrix()
-    stroke(s_color)
-    fill(s_fill)
-    translate(x, y)
-    translate(-s_size/2, -s_size/2)
-    strokeWeight(s_size/10)
-    rect(0, 0, s_size, s_size)
-    popMatrix()
 
+def check(x, y, size=20, color="#00833C"):
+    Check(x, y, size, color).draw()
+
+
+class XMark(object):
+
+    def __init__(self, x, y, size=20, color="#FF5000"):
+        self.x = x
+        self.y = y
+        self.size = size
+        self.color = color
+
+    def draw(self):
+        pushMatrix()
+        stroke(self.color)
+        fill(255)
+        translate(self.x, self.y)
+        strokeWeight(self.size/10)
+        ellipse(0, 0, self.size, self.size)
+        strokeWeight(self.size/5)
+        rotate(pi/4)
+        line(-self.size/2, 0, self.size/2, 0)
+        rotate(pi/2)
+        line(-self.size/2, 0, self.size/2, 0)
+        popMatrix()
+
+
+def x_mark(x, y, size=20, color="#FF5000"):
+    XMark(x, y, size, color).draw()
+
+
+class Square(object):
+
+    def __init__(self, x, y, size, color="#5A5A5A", fill="#B9B9B9"):
+        self.x = x
+        self.y = y
+        self.size = size
+        self.color = color
+        self.fill = fill
+
+    def draw(self):
+        pushMatrix()
+        stroke(self.color)
+        fill(self.fill)
+        translate(self.x, self.y)
+        translate(-self.size/2, -self.size/2)
+        strokeWeight(self.size/10)
+        rect(0, 0, self.size, self.size)
+        popMatrix()
+
+
+def square(x, y, size, color="#5A5A5A", fill="#B9B9B9"):
+    Square(x, y, size, color, fill).draw()
