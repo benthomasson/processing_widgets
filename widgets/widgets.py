@@ -80,3 +80,25 @@ class Square(object):
 
 def square(x, y, size, color="#5A5A5A", fill="#B9B9B9"):
     Square(x, y, size, color, fill).draw()
+
+class Circle(object):
+
+    def __init__(self, x, y, size, color="#5A5A5A", fill="#B9B9B9"):
+        self.x = x
+        self.y = y
+        self.size = size
+        self.color = color
+        self.fill = fill
+
+    def draw(self):
+        pushMatrix()
+        stroke(self.color)
+        fill(self.fill)
+        translate(self.x, self.y)
+        strokeWeight(self.size/10)
+        ellipse(0, 0, self.size, self.size)
+        popMatrix()
+
+
+def circle(x, y, size, color="#5A5A5A", fill="#B9B9B9"):
+    Circle(x, y, size, color, fill).draw()
