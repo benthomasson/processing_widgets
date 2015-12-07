@@ -41,7 +41,7 @@ class Check(Animated):
         fill(255)
         translate(self.x, self.y)
         strokeWeight(self.size/10)
-        ellipse(0, 0, self.size, self.size)
+        arc(0, 0, self.size, self.size, pi*3/2, pi*3/2 + 2 * pi * self.phasePercent)
         popMatrix()
 
     def phase1(self):
@@ -114,7 +114,7 @@ class XMark(Animated):
         fill(255)
         translate(self.x, self.y)
         strokeWeight(self.size/10)
-        ellipse(0, 0, self.size, self.size)
+        arc(0, 0, self.size, self.size, pi*3/2, pi*3/2 + 2 * pi * self.phasePercent)
         popMatrix()
 
     def phase1(self):
