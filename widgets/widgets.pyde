@@ -22,8 +22,7 @@ def setup():
     c = animated_widgets.Check(133, 30, 20)
     x = animated_widgets.XMark(133, 60, 20)
     s = widgets.Circle(133, 90, 20)
-    l = animated_widgets.SparkLine("CPU", "%", [
-                                   0, 5, 100, 2, 30, 90, 50, 10, 20, 10, 100, 20, 100, 10, 30, 100, 10, 10, 0, 100], 133, 120, 40)
+    l = animated_widgets.SparkLine("CPU", "%", [], 133, 120, 40)
 
     widget_list.append(c)
     widget_list.append(x)

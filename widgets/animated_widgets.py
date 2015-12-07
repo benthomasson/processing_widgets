@@ -191,6 +191,8 @@ def square(x, y, size, color="#5A5A5A", fill="#B9B9B9"):
 
 
 def normalize(data):
+    if max(data) == min(data):
+        return data
     return [float(x-min(data))/(max(data)-min(data)) for x in data]
 
 
@@ -221,7 +223,8 @@ class SparkLine(Animated):
         return 1.0 * (self.frame - self.frameSpeed * self.phase) / self.frameSpeed
 
     def draw(self):
-        if self.frame < (min(10, len(self.data)) - 1) * self.frameSpeed:
+        print self.frame, (len(self.data) - 1) * self.frameSpeed
+        if self.frame < 9 * self.frameSpeed and self.frame < (len(self.data) - 1) * self.frameSpeed:
             self.startup_phase()
             self.frame += 1
         elif self.frame < (len(self.data) - 1) * self.frameSpeed:
@@ -239,6 +242,7 @@ class SparkLine(Animated):
         text(self.label, 0, self.size)
 
     def startup_phase(self):
+        strokeWeight(min(2, self.size/10))
         pushMatrix()
         self._draw_label()
         translate(textWidth(self.label) + self.size/8, self.size)
@@ -277,6 +281,7 @@ class SparkLine(Animated):
 
     def extending_phase(self):
         pushMatrix()
+        strokeWeight(min(2, self.size/10))
         self._draw_label()
         translate(textWidth(self.label) + self.size/8, self.size)
         translate(-self.size/2 * self.phasePercent, 0)
@@ -326,12 +331,16 @@ class SparkLine(Animated):
         popMatrix()
 
     def final_phase(self):
+        if len(self.data) == 0:
+            return
         pushMatrix()
+        strokeWeight(min(2, self.size/10))
         self._draw_label()
         translate(textWidth(self.label) + self.size/8, self.size)
         normalized = normalize(self.data)
         normalized = list(enumerate(normalized[-10:]))
         previous_datum = normalized[0]
+        x2, y2 = previous_datum
         for datum in normalized[1:10]:
             x1, y1 = previous_datum
             x2, y2 = datum
@@ -343,4 +352,4 @@ class SparkLine(Animated):
         text("{0}{1}".format(self.data[-1], self.units), 0, 0)
         popMatrix()
         self.data = self.data[-10:]
-        self.frame = 9 * self.frameSpeed
+        self.frame = (len(self.data) - 1) * self.frameSpeed
