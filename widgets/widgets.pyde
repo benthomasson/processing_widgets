@@ -22,8 +22,12 @@ def setup():
     global widget_list, l, glass, move, bar
     widget_list = []
     background(255)
+    # https://github.com/processing/processing/issues/4198
+    # noCursor fails to work on FX2D
     noCursor()
     size(page_width, page_height, FX2D)
+    # It works with P2D
+    # size(page_width, page_height, P2D)
     frameRate(30)
 
     c = animated_widgets.Check(133, 30, 20)
