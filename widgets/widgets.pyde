@@ -15,10 +15,11 @@ l = None
 glass = None
 move = None
 toggle = False
+bar = None
 
 
 def setup():
-    global widget_list, l, glass, move
+    global widget_list, l, glass, move, bar
     widget_list = []
     background(255)
     noCursor()
@@ -30,6 +31,9 @@ def setup():
     s = widgets.Circle(133, 90, 20)
     l = animated_widgets.SparkLine("CPU", "%", [], 133, 120, 40)
 
+    bar = widgets.ToolBar([widgets.MoveTool(0,0),
+                           widgets.MagnifyingGlassTool(0,0),
+                           widgets.SelectionTool(0,0)], x=200, y=0)
     glass = widgets.MagnifyingGlassMousePointer()
     move = widgets.MoveMousePointer()
 
@@ -52,6 +56,7 @@ def draw():
     widgets.check(66, 30, 20)
     widgets.x_mark(66, 60, 20)
     widgets.square(66, 90, 20)
+    bar.draw()
     for widget in widget_list:
         widget.draw()
     if toggle:

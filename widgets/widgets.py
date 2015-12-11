@@ -2,6 +2,105 @@
 
 from math import pi
 
+class ToolBar(object):
+
+    def __init__(self, tools, x=0, y=0, size=40, color="#5A5A5A", fill="#B9B9B9"):
+        self.x = x
+        self.y = y
+        self.color = color
+        self.fill = fill
+        self.size = size
+        self.tools = []
+        self.tools.extend(tools)
+
+    def draw(self):
+        pushMatrix()
+        translate(self.x, self.y)
+        strokeWeight(2)
+        fill(self.fill)
+        stroke(self.color)
+        rect(0, 0, self.size * len(self.tools), self.size)
+        translate(self.size/2, self.size/2)
+        for tool in self.tools:
+            tool.draw()
+            translate(self.size, 0)
+        popMatrix()
+
+
+class SelectionTool(object):
+
+    def __init__(self, x, y, size=20, color="#5A5A5A"):
+        self.size = size
+        self.x = x
+        self.y = y
+        self.color = color
+
+    def draw(self):
+        x = self.x
+        y = self.y
+        strokeWeight(2)
+        stroke(self.color)
+        fill(self.color)
+        translate(x, y)
+        rotate(pi/3)
+        rotate(pi)
+        translate(-self.size/2, 0)
+        line(self.size, 0, 0, 0)
+        pushMatrix()
+        translate(self.size, 0)
+        triangle(0, 0, -10, 5, -10, -5)
+        popMatrix()
+
+
+class MoveTool(object):
+
+    def __init__(self, x, y, size=20, color="#5A5A5A"):
+        self.size = size
+        self.x = x
+        self.y = y
+        self.color = color
+
+    def draw(self):
+        x = self.x
+        y = self.y
+        strokeWeight(2)
+        stroke(self.color)
+        pushMatrix()
+        translate(x, y)
+        for r in xrange(4):
+            rotate(pi/2)
+            line(self.size/2, 0, 0, 0)
+            pushMatrix()
+            translate(self.size/2, 0)
+            triangle(0, 0, -4, 2, -4, -2)
+            popMatrix()
+        popMatrix()
+
+
+class MagnifyingGlassTool(object):
+
+    def __init__(self, x, y, size=20, color="#5A5A5A"):
+        self.x = x
+        self.y = y
+        self.size = size
+        self.color = color
+
+    def draw(self):
+        x = self.x
+        y = self.y
+        strokeWeight(2)
+        noFill()
+        stroke(self.color)
+        ellipse(x, y, self.size, self.size)
+        pushMatrix()
+        translate(x, y)
+        rotate(pi/4)
+        translate(self.size/2, 0)
+        line(self.size/2, 0, 0, 0)
+        popMatrix()
+
+
+
 
 class MagnifyingGlassMousePointer(object):
 
@@ -16,10 +115,12 @@ class MagnifyingGlassMousePointer(object):
         noFill()
         stroke(self.color)
         ellipse(x,y, self.size, self.size)
+        pushMatrix()
         translate(x, y)
         rotate(pi/4)
         translate(self.size/2, 0)
         line(self.size/2, 0, 0, 0)
+        popMatrix()
 
 
 class MoveMousePointer(object):
@@ -33,6 +134,7 @@ class MoveMousePointer(object):
         y = mouseY
         strokeWeight(2)
         stroke(self.color)
+        pushMatrix()
         translate(x, y)
         for r in xrange(4):
             rotate(pi/2)
@@ -41,6 +143,7 @@ class MoveMousePointer(object):
             translate(self.size/2, 0)
             triangle(0, 0, -4, 2, -4, -2)
             popMatrix()
+        popMatrix()
 
 
 class Check(object):
