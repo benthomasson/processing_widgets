@@ -61,6 +61,7 @@ def draw():
     widgets.x_mark(66, 60, 20)
     widgets.square(66, 90, 20)
     bar.draw()
+    widgets.notification_count(300, 300, 9999)
     for widget in widget_list:
         widget.draw()
     if toggle:

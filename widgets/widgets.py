@@ -2,6 +2,37 @@
 
 from math import pi
 
+
+class NotificationCount(object):
+
+    def __init__(self, x, y, count=0, size=20):
+        self.x = x
+        self.y = y
+        self.count = count
+        self.size = size
+
+    def draw(self):
+        pushMatrix()
+        translate(self.x, self.y)
+        textAlign(CENTER, CENTER)
+        stroke("#FF5000")
+        fill("#FF5000")
+        count_str = str(self.count)
+        textSize(int(self.size * 3/4))
+        ellipse(-textWidth(count_str)/2, 0, self.size, self.size)
+        rect(-textWidth(count_str)/2, -self.size/2, textWidth(count_str), self.size)
+        ellipse(textWidth(count_str)/2, 0, self.size, self.size)
+        translate(0, -self.size/10)
+        fill(255)
+        text(count_str, 0, 0)
+        popMatrix()
+        textAlign(LEFT, BASELINE)
+
+
+def notification_count(x, y, count):
+    NotificationCount(x, y, count).draw()
+
+
 class ToolBar(object):
 
     def __init__(self, tools, x=0, y=0, size=40, color="#5A5A5A", fill="#B9B9B9"):
