@@ -3,6 +3,46 @@
 from math import pi
 
 
+class MagnifyingGlassMousePointer(object):
+
+    def __init__(self, size=20, color="#5A5A5A"):
+        self.size = size
+        self.color = color
+
+    def draw(self):
+        x = mouseX
+        y = mouseY
+        strokeWeight(2)
+        noFill()
+        stroke(self.color)
+        ellipse(x,y, self.size, self.size)
+        translate(x, y)
+        rotate(pi/4)
+        translate(self.size/2, 0)
+        line(self.size/2, 0, 0, 0)
+
+
+class MoveMousePointer(object):
+
+    def __init__(self, size=20, color="#5A5A5A"):
+        self.size = size
+        self.color = color
+
+    def draw(self):
+        x = mouseX
+        y = mouseY
+        strokeWeight(2)
+        stroke(self.color)
+        translate(x, y)
+        for r in xrange(4):
+            rotate(pi/2)
+            line(self.size/2, 0, 0, 0)
+            pushMatrix()
+            translate(self.size/2, 0)
+            triangle(0, 0, -4, 2, -4, -2)
+            popMatrix()
+
+
 class Check(object):
 
     def __init__(self, x, y, size=20, color="#00833C"):
