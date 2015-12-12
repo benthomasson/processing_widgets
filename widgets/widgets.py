@@ -155,6 +155,32 @@ def notification_count(x, y, count):
     NotificationCount(x, y, count).draw()
 
 
+class ButtonBar(object):
+
+    def __init__(self, buttons, x=0, y=0, size=50, color="#5A5A5A", fill="#B9B9B9", padding=5):
+        self.x = x
+        self.y = y
+        self.color = color
+        self.fill = fill
+        self.size = size
+        self.padding = padding
+        self.buttons = []
+        self.buttons.extend(buttons)
+
+    def draw(self):
+        strokeWeight(2)
+        fill(self.fill)
+        noStroke()
+        rect(self.x, self.y, sum([b.width + self.padding for b in self.buttons]) + self.padding, self.size, self.size/5)
+        x = self.x + self.padding
+        y = self.y + self.padding
+        for button in self.buttons:
+            button.x = x
+            button.y = y
+            button.draw()
+            x += button.width + self.padding
+
+
 class ToolBar(object):
 
     def __init__(self, tools, x=0, y=0, size=40, color="#5A5A5A", fill="#B9B9B9"):

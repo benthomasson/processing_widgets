@@ -17,6 +17,7 @@ move = None
 toggle = False
 bar = None
 active_widgets = []
+top_level_widgets = []
 
 
 def setup():
@@ -47,10 +48,14 @@ def setup():
     widget_list.append(s)
     widget_list.append(l)
 
-    active_widgets.append(widgets.Button(x=300, y=400, label="Foo"))
-    active_widgets.append(widgets.SelectionButton(x=400, y=400))
-    active_widgets.append(widgets.MoveButton(x=500, y=400))
-    active_widgets.append(widgets.MagnifyingGlassButton(x=600, y=400))
+
+    active_widgets.append(widgets.Button(x=0, y=0, label="Foo"))
+    active_widgets.append(widgets.SelectionButton(x=0, y=0))
+    active_widgets.append(widgets.MoveButton(x=0, y=0))
+    active_widgets.append(widgets.MagnifyingGlassButton(x=0, y=0))
+
+    button_bar = widgets.ButtonBar(active_widgets, 400, 400)
+    top_level_widgets.append(button_bar)
 
 f = 0
 
@@ -76,7 +81,7 @@ def draw():
         else:
             widget.mouseOut()
             widget.mouseReleased()
-    for widget in active_widgets:
+    for widget in top_level_widgets:
         widget.draw()
     for widget in widget_list:
         widget.draw()
