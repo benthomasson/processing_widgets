@@ -20,6 +20,10 @@ active_widgets = []
 top_level_widgets = []
 
 
+def clicked(button):
+    print "Clicked! ", button
+
+
 def setup():
     global widget_list, l, glass, move, bar
     widget_list = []
@@ -48,11 +52,10 @@ def setup():
     widget_list.append(s)
     widget_list.append(l)
 
-
-    active_widgets.append(widgets.Button(x=0, y=0, label="Foo"))
-    active_widgets.append(widgets.SelectionButton(x=0, y=0))
-    active_widgets.append(widgets.MoveButton(x=0, y=0))
-    active_widgets.append(widgets.MagnifyingGlassButton(x=0, y=0))
+    active_widgets.append(widgets.Button(x=0, y=0, label="Foo", call_back=clicked))
+    active_widgets.append(widgets.SelectionButton(x=0, y=0, call_back=clicked))
+    active_widgets.append(widgets.MoveButton(x=0, y=0, call_back=clicked))
+    active_widgets.append(widgets.MagnifyingGlassButton(x=0, y=0, call_back=clicked))
 
     button_bar = widgets.ButtonBar(active_widgets, 400, 400)
     top_level_widgets.append(button_bar)

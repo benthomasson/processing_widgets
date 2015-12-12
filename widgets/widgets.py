@@ -2,6 +2,8 @@
 
 from math import pi
 
+import button_fsm
+
 
 class Widget(object):
 
@@ -34,9 +36,9 @@ class Widget(object):
         pass
 
 
-class Button(Widget):
+class Button(Widget, button_fsm.Controller):
 
-    def __init__(self, x, y, label, text_size=20, size=20, color="#5A5A5A", fill="#B9B9B9", pressed_color="#7F7F7F"):
+    def __init__(self, x, y, label, text_size=20, size=20, color="#5A5A5A", fill="#B9B9B9", pressed_color="#7F7F7F", call_back=None):
         self.x = x
         self.y = y
         self.text_size = text_size
@@ -45,20 +47,23 @@ class Button(Widget):
         self.fill = fill
         self.size = size
         self.pressed_color = pressed_color
+        self.state = button_fsm.NotPressed
         self.pressed = False
         self.active = False
+        self.call_back = call_back
 
     def mouseOver(self):
         self.active = True
 
     def mouseOut(self):
         self.active = False
+        self.state.mouseOut(self)
 
     def mousePressed(self):
-        self.pressed = True
+        self.state.mousePressed(self)
 
     def mouseReleased(self):
-        self.pressed = False
+        self.state.mouseReleased(self)
 
     @property
     def top_extent(self):
