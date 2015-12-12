@@ -16,6 +16,7 @@ glass = None
 move = None
 toggle = False
 bar = None
+active_widgets = []
 
 
 def setup():
@@ -35,9 +36,9 @@ def setup():
     s = widgets.Circle(133, 90, 20)
     l = animated_widgets.SparkLine("CPU", "%", [], 133, 120, 40)
 
-    bar = widgets.ToolBar([widgets.MoveTool(0,0),
-                           widgets.MagnifyingGlassTool(0,0),
-                           widgets.SelectionTool(0,0)], x=200, y=0)
+    bar = widgets.ToolBar([widgets.MoveTool(x=0, y=0),
+                           widgets.MagnifyingGlassTool(x=0, y=0),
+                           widgets.SelectionTool(x=0, y=0)], x=200, y=0)
     glass = widgets.MagnifyingGlassMousePointer()
     move = widgets.MoveMousePointer()
 
@@ -46,6 +47,7 @@ def setup():
     widget_list.append(s)
     widget_list.append(l)
 
+    active_widgets.append(widgets.Button(x=300, y=400, label="Foo"))
 
 f = 0
 
@@ -56,12 +58,23 @@ def draw():
     background(255)
     noFill()
     f += 1
-    arc(250, 255, 50, 50, pi*3/2, pi*3/2 + f / 5.0)
+    arc(250, 255, 50, 50, pi * 3 / 2, pi * 3 / 2 + f / 5.0)
     widgets.check(66, 30, 20)
     widgets.x_mark(66, 60, 20)
     widgets.square(66, 90, 20)
     bar.draw()
     widgets.notification_count(300, 300, 9999)
+    for widget in active_widgets:
+        if (mouseX > widget.left_extent and
+                mouseX < widget.right_extent and
+                mouseY > widget.top_extent and
+                mouseY < widget.bottom_extent):
+            widget.mouseOver()
+        else:
+            widget.mouseOut()
+            widget.mouseReleased()
+    for widget in active_widgets:
+        widget.draw()
     for widget in widget_list:
         widget.draw()
     if toggle:
@@ -72,5 +85,20 @@ def draw():
 
 def mousePressed():
     global toggle
+    for widget in active_widgets:
+        if (mouseX > widget.left_extent and
+                mouseX < widget.right_extent and
+                mouseY > widget.top_extent and
+                mouseY < widget.bottom_extent):
+            widget.mousePressed()
     l.data.append(random.randint(0, 100))
     toggle = not toggle
+
+
+def mouseReleased():
+    for widget in active_widgets:
+        if (mouseX > widget.left_extent and
+                mouseX < widget.right_extent and
+                mouseY > widget.top_extent and
+                mouseY < widget.bottom_extent):
+            widget.mouseReleased()
