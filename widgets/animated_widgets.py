@@ -223,7 +223,6 @@ class SparkLine(Animated):
         return 1.0 * (self.frame - self.frameSpeed * self.phase) / self.frameSpeed
 
     def draw(self):
-        print self.frame, (len(self.data) - 1) * self.frameSpeed
         if self.frame < 9 * self.frameSpeed and self.frame < (len(self.data) - 1) * self.frameSpeed:
             self.startup_phase()
             self.frame += 1

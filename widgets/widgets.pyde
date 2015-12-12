@@ -48,6 +48,9 @@ def setup():
     widget_list.append(l)
 
     active_widgets.append(widgets.Button(x=300, y=400, label="Foo"))
+    active_widgets.append(widgets.SelectionButton(x=400, y=400))
+    active_widgets.append(widgets.MoveButton(x=500, y=400))
+    active_widgets.append(widgets.MagnifyingGlassButton(x=600, y=400))
 
 f = 0
 

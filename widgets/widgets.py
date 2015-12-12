@@ -77,6 +77,14 @@ class Button(Widget):
     def bottom_extent(self):
         return self.y + self.size + self.text_size
 
+    @property
+    def width(self):
+        return self.right_extent - self.left_extent
+
+    @property
+    def height(self):
+        return self.bottom_extent - self.top_extent
+
     def draw(self):
         self.draw_button()
         self.draw_icon()
@@ -94,7 +102,7 @@ class Button(Widget):
         else:
             fill(self.fill)
         textSize(self.text_size)
-        rect(0, 0, textWidth(self.label) + self.size, self.size + self.text_size)
+        rect(0, 0, self.width, self.height, self.size/5)
         popMatrix()
 
     def draw_icon(self):
@@ -172,6 +180,35 @@ class ToolBar(object):
         popMatrix()
 
 
+class SelectionButton(Button):
+
+    def __init__(self, x, y, size=20, color="#5A5A5A", **kwargs):
+        Button.__init__(self, x, y, "", size=size, color=color, **kwargs)
+
+    @property
+    def right_extent(self):
+        return self.x + self.size + self.text_size
+
+    def draw_icon(self):
+        pushMatrix()
+        x = self.x
+        y = self.y
+        strokeWeight(2)
+        stroke(self.color)
+        fill(self.color)
+        translate(x, y)
+        translate(self.width/2, self.height/2)
+        rotate(pi/3)
+        rotate(pi)
+        translate(-self.size/2, 0)
+        line(self.size, 0, 0, 0)
+        pushMatrix()
+        translate(self.size, 0)
+        triangle(0, 0, -10, 5, -10, -5)
+        popMatrix()
+        popMatrix()
+
+
 class SelectionTool(object):
 
     def __init__(self, x, y, size=20, color="#5A5A5A"):
@@ -197,6 +234,34 @@ class SelectionTool(object):
         popMatrix()
 
 
+class MoveButton(Button):
+
+    def __init__(self, x, y, size=20, color="#5A5A5A", **kwargs):
+        Button.__init__(self, x=x, y=y, label="", size=size, color=color, **kwargs)
+
+    @property
+    def right_extent(self):
+        return self.x + self.size + self.text_size
+
+    def draw_icon(self):
+        pushMatrix()
+        x = self.x
+        y = self.y
+        strokeWeight(2)
+        stroke(self.color)
+        translate(x, y)
+        translate(self.width/2, self.height/2)
+        for r in xrange(4):
+            rotate(pi/2)
+            line(self.size/2, 0, 0, 0)
+            pushMatrix()
+            translate(self.size/2, 0)
+            fill(self.color)
+            triangle(0, 0, -4, 2, -4, -2)
+            popMatrix()
+        popMatrix()
+
+
 class MoveTool(object):
 
     def __init__(self, x, y, size=20, color="#5A5A5A"):
@@ -217,8 +282,36 @@ class MoveTool(object):
             line(self.size/2, 0, 0, 0)
             pushMatrix()
             translate(self.size/2, 0)
+            fill(self.color)
             triangle(0, 0, -4, 2, -4, -2)
             popMatrix()
+        popMatrix()
+
+
+class MagnifyingGlassButton(Button):
+
+    def __init__(self, x, y, size=20, color="#5A5A5A", **kwargs):
+        Button.__init__(self, x=x, y=y, label="", size=size, color=color, **kwargs)
+
+    @property
+    def right_extent(self):
+        return self.x + self.size + self.text_size
+
+    def draw_icon(self):
+        pushMatrix()
+        x = self.x
+        y = self.y
+        strokeWeight(2)
+        noFill()
+        stroke(self.color)
+        translate(x, y)
+        translate(self.width/2, self.height/2)
+        ellipse(0, 0, self.size, self.size)
+        pushMatrix()
+        rotate(pi / 4)
+        translate(self.size / 2, 0)
+        line(self.size / 2, 0, 0, 0)
+        popMatrix()
         popMatrix()
 
 
@@ -243,18 +336,6 @@ class MagnifyingGlassTool(object):
         translate(self.size / 2, 0)
         line(self.size / 2, 0, 0, 0)
         popMatrix()
-        pushMatrix()
-        translate(x, y)
-        rotate(pi / 2)
-        for r in xrange(2):
-            rotate(pi)
-            pushMatrix()
-            translate(self.size, 0)
-            line(self.size / 2, 0, 0, 0)
-            translate(self.size / 2, 0)
-            triangle(0, 0, -4, 2, -4, -2)
-            popMatrix()
-        popMatrix()
 
 
 class MagnifyingGlassMousePointer(object):
@@ -276,6 +357,18 @@ class MagnifyingGlassMousePointer(object):
         translate(self.size / 2, 0)
         line(self.size / 2, 0, 0, 0)
         popMatrix()
+        pushMatrix()
+        translate(x, y)
+        rotate(pi / 2)
+        for r in xrange(2):
+            rotate(pi)
+            pushMatrix()
+            translate(self.size, 0)
+            line(self.size / 2, 0, 0, 0)
+            translate(self.size / 2, 0)
+            triangle(0, 0, -4, 2, -4, -2)
+            popMatrix()
+        popMatrix()
 
 
 class MoveMousePointer(object):
@@ -296,6 +389,7 @@ class MoveMousePointer(object):
             line(self.size / 2, 0, 0, 0)
             pushMatrix()
             translate(self.size / 2, 0)
+            fill(self.color)
             triangle(0, 0, -4, 2, -4, -2)
             popMatrix()
         popMatrix()
