@@ -1,11 +1,11 @@
 
 
-import widgets
+import processing_widgets.widgets as widgets
 import random
 
 from math import pi
 
-import animated_widgets
+import processing_widgets.animated_widgets as animated_widgets
 
 page_width = 1024
 page_height = 768
@@ -15,7 +15,6 @@ l = None
 glass = None
 move = None
 toggle = False
-bar = None
 active_widgets = []
 top_level_widgets = []
 
@@ -25,7 +24,7 @@ def clicked(button):
 
 
 def setup():
-    global widget_list, l, glass, move, bar
+    global widget_list, l, glass, move
     widget_list = []
     background(255)
     # https://github.com/processing/processing/issues/4198
@@ -41,9 +40,6 @@ def setup():
     s = widgets.Circle(133, 90, 20)
     l = animated_widgets.SparkLine("CPU", "%", [], 133, 120, 40)
 
-    bar = widgets.ToolBar([widgets.MoveTool(x=0, y=0),
-                           widgets.MagnifyingGlassTool(x=0, y=0),
-                           widgets.SelectionTool(x=0, y=0)], x=200, y=0)
     glass = widgets.MagnifyingGlassMousePointer()
     move = widgets.MoveMousePointer()
 
@@ -73,7 +69,6 @@ def draw():
     widgets.check(66, 30, 20)
     widgets.x_mark(66, 60, 20)
     widgets.square(66, 90, 20)
-    bar.draw()
     widgets.notification_count(300, 300, 9999)
     for widget in active_widgets:
         if (mouseX > widget.left_extent and
